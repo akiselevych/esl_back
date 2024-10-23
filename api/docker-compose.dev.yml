@@ -1,0 +1,75 @@
+version: "3.8"
+
+services:
+  postgres-db:
+    image: postgres:15
+    restart: always
+    volumes:
+      - postgres-db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_HOST: ${DB_HOST}
+      POSTGRES_PORT: ${DB_PORT}
+    env_file:
+      - .env.dev
+    container_name: postgres_db
+
+  api:
+    build:
+      context: .
+    volumes:
+      - .:/apps/api
+      - media-data:/apps/api/${MEDIA_ROOT}
+      - static-data:/apps/api/${STATIC_ROOT}
+      - ./.env.dev:/apps/api/.env.dev
+    depends_on:
+      - postgres-db
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_HOST: ${DB_HOST}
+      POSTGRES_PORT: ${DB_PORT}
+    env_file:
+      - .env.dev
+    ports:
+      - "8000:8000"
+    container_name: api
+
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    restart: always
+    volumes:
+      - redis-data:/data
+    env_file:
+      - .env.dev
+
+
+  pg-admin:
+    image: dpage/pgadmin4
+    container_name: pg_admin
+    restart: always
+    ports:
+      - "82:80"
+    depends_on:
+      - postgres-db
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "${PG_ADMIN_EMAIL}"
+      PGADMIN_DEFAULT_PASSWORD: "${PG_ADMIN_PASSWORD}"
+    volumes:
+      - pg-admin-data:/var/lib/pgadmin
+    env_file:
+      - .env.dev
+
+volumes:
+  postgres-db-data:
+  pg-admin-data:
+  redis-data:
+  media-data:
+  static-data:

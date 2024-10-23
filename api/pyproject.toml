@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "api"
+version = "0.1.0"
+description = ""
+authors = ["Oleg Kuzmenko <olegkuzmenko2005@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.109.0"
+sqlalchemy = "^2.0.25"
+python-dotenv = "^1.0.0"
+pydantic-settings = "^2.1.0"
+psycopg-binary = "^3.1.17"
+psycopg = "^3.1.17"
+alembic = "^1.13.1"
+greenlet = "^3.0.3"
+gunicorn = "^21.2.0"
+uvicorn = "^0.26.0"
+email-validator = "^2.1.0.post1"
+passlib = "^1.7.4"
+asyncpg = "^0.29.0"
+python-jose = "^3.3.0"
+redis = "^5.0.1"
+aioredis = "^2.0.1"
+sqladmin = "^0.16.0"
+itsdangerous = "^2.1.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
