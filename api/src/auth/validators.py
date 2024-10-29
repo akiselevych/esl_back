@@ -13,7 +13,7 @@ class PasswordValidator:
 
     def check_all(self):
         check_funcs = [
-            self.check_length,
+            self.check_length
         ]
 
         for func in check_funcs:
