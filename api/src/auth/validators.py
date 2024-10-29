@@ -13,9 +13,6 @@ class PasswordValidator:
 
     def check_all(self):
         check_funcs = [
-            self.check_lowercase,
-            self.check_uppercase,
-            self.check_numbers,
             self.check_length,
         ]
 
